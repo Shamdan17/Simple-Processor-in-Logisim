@@ -14,6 +14,7 @@ string toHex(string a, int length){
 			}else{
 				result += (char)('a'+(val-10));
 			}
+			val = 0;
 		}
 	}
 	return result;
@@ -22,8 +23,10 @@ string toHex(string a, int length){
 int main(){
 	string hm;
 	cin >> hm;
+	cout << "v2.0 raw" << endl;
 	while(hm!="EOF"){
+		cout << toHex(hm,32) << " ";
 		cin >> hm;
-		cout << toHex(hm,32) << endl;
 	}
+	cout << endl;
 }

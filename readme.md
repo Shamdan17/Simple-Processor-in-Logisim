@@ -26,4 +26,5 @@ To run the processor:
 * Run the machine code to ROM image converter to get an image that's loadable and ready to use by Logisim
 
 **Note:** Registers should be referred to by numbers from 0-31
- 
+
+**Very important note:** When using the assembler and/or the converter, inputs should be terminated with an explicit "EOF" string, otherwise an infinite loop will occur.
