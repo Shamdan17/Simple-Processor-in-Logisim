@@ -60,6 +60,9 @@ string toHex(string a, int length){
 
 string toBinary(int a, int length){
 	string result = "";
+	if(a<0){
+		return toBinary((1<<31) + a, length);
+	}
 	for(int i=0;i<length;i++){
 		if(a%2==1){
 			result="1"+result;
@@ -104,7 +107,7 @@ string get2Registers(){
 string get2RegistersImm(){
 	string result="";
 	int rs, rt, imm;
-	scanf("%d, %d, %d", &rs, &rt, &imm);
+	scanf("%d, %d, %d", &rt, &rs, &imm);
 	// convert to binary
 	result= toBinary(rs,5) + toBinary(rt,5) + toBinary(imm,16);
 	return result;
@@ -114,7 +117,7 @@ string get2RegistersImm(){
 string get2RegistersShamt(){
 	string result="";
 	int rs, rt, shamt;
-	scanf("%d, %d, %d", &rs, &rt, &shamt);
+	scanf("%d, %d, %d", &rt, &rs, &shamt);
 	// convert to binary and fill to 26 bits with zeroes
 	result= toBinary(rs,5)  + zeros(5) + toBinary(rt,5)+ toBinary(shamt,5) + zeros(6);
 	return result;
@@ -134,19 +137,48 @@ string get1Register(){
 string getLoadStore(){
 	string result="";
 	int rd, rs, imm;
-	scanf("%d, %d(%d)", &rd, &rs, &imm);
+	scanf("%d, %d(%d)", &rd, &imm , &rs);
 	// convert to binary and fill to 26 bits with zeroes
 	result= toBinary(rs,5) + toBinary(rd,5) + toBinary(imm,16);
 	return result;
 }
 
 // TODO: Handle branches and jumps
+// supported format: beq rs, rt, offset
+string get2RegistersBeq(){
+	string result="";
+	int rs, rt, offset;
+	scanf("%d, %d, %d", &rs, &rt, &offset);
+	// convert to binary and fill to 26 bits with zeroes
+	result= toBinary(rs,5)  + toBinary(rt,5)+ toBinary(offset/4,16);
+	return result;
+}
 
+// supported format: blez rs, offset
+string get1RegistersBlez(){
+	string result="";
+	int rs, offset;
+	scanf("%d, %d", &rs, &offset);
+	// convert to binary and fill to 26 bits with zeroes
+	result= toBinary(rs,5)  + zeros(5) + toBinary(offset/4,16);
+	return result;
+}
+
+// supported format: j address
+string 	getJump(){
+	string result="";
+	int offset;
+	scanf("%d", &offset);
+	// convert to binary and fill to 26 bits with zeroes
+	result= toBinary(offset/4,26);
+	return result;
+}
 
 int main(){
 	for(int i=0;i<16;i++){
 		op[operations[i]] = toBinary(i,6);
 	}
+	int counter = 0;
 	string hm;
 	cin >> hm;
 	while(hm!="EOF"){
@@ -157,26 +189,35 @@ int main(){
 			case 4:
 			case 7:
 				cout << op[hm] << get3Registers() << endl;
-			break;
+				break;
 			case 2:
 				cout << op[hm] << get2Registers() << endl;
-			break;
+				break;
 			case 5:
 				cout << op[hm] << get2RegistersImm() << endl;
-			break;
+				break;
 			case 6:
 				cout << op[hm] << get2RegistersShamt() << endl;
-			break;
+				break;
 			case 8:
 			case 9:
 				cout << op[hm] << get1Register() << endl;
-			break;
+				break;
 			case 10:
 			case 11:
 				cout << op[hm] << getLoadStore() << endl;
-			break;
+				break;
+			case 12:
+				cout << op[hm] << get2RegistersBeq() << endl;
+				break;
+			case 13:
+				cout << op[hm] << get1RegistersBlez() << endl;
+				break;
+			case 14:
+				cout << op[hm] << getJump() << endl;
+				break;
 			case -1:
-			return 0;					
+				return 0;
 		}
 		cin >> hm;
 	}
