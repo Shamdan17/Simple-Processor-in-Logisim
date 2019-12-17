@@ -1,0 +1,16 @@
+sub 0, 0, 0 #init 0 to 0
+addi 1, 0, 0 #init addresses of A=0, B=1, C=2
+addi 2, 1, 24
+addi 3, 2, 24
+lw 4, 0(1) #load A[i], B[i]
+lw 5, 0(2)
+mult 4, 5 #multiply them
+mflo 5 #load the result
+sw 5, 0(3) #save the result
+slt 6, 0, 5 #check if the result is 0
+beq 6, 0, 16 #if the result is 0, jump to exit
+addi 1, 1, 4 #increment array values in order to get next items
+addi 2, 2, 4
+addi 3, 3, 4
+j 16 #Go back to lw, loop
+EOF

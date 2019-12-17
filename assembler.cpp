@@ -27,7 +27,7 @@ string operations[]{
 	"beq", //12
 	"blez", //13
 	"j", //14
-	"myIns", //15		
+	"transfer", //15		
 };
 
 int indexOf(string st){
@@ -174,6 +174,16 @@ string 	getJump(){
 	return result;
 }
 
+// supported format: transfer rd, rs
+// transfers the contents of the register rs to rd
+string getMyIns(){
+	string result = "";
+	int rd, rs;
+	scanf("%d, %d", &rd, &rs);
+	result =  toBinary(rs, 5) + toBinary(rd, 5) + zeros(16);
+	return result;
+}
+
 int main(){
 	for(int i=0;i<16;i++){
 		op[operations[i]] = toBinary(i,6);
@@ -216,6 +226,8 @@ int main(){
 			case 14:
 				cout << op[hm] << getJump() << endl;
 				break;
+			case 15:
+				cout << op[hm] << getMyIns() << endl;
 			case -1:
 				return 0;
 		}
