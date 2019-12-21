@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int A[6],B[6],C[2],sum=0,product=1; 
+
+int main(){
+	int i=0;
+	for(int i=0;i<6;i++){
+		sum+=A[i];
+		product*=A[i];
+	}
+	C[0]=sum;
+	C[1]=product;
+	return 0;
+}

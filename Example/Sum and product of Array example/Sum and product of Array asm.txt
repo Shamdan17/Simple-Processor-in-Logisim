@@ -1,0 +1,16 @@
+sub 0, 0, 0
+addi 1, 0, 0
+addi 2, 0, 0
+addi 3, 0, 1
+addi 4, 0, 6
+lw 5, 0(1)
+add 2, 5, 2
+mult 3, 5
+mflo 3
+addi 4, 4, -1
+addi 1, 1, 4
+blez 4, 4
+j 20
+sw 2, 24(0)
+sw 3, 28(0)
+EOF
