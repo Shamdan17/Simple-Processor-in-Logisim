@@ -1,5 +1,5 @@
 # Custom Processor
-MIPS based processor
+MIPS based processor designed from scratch in Logisim as part of a Computer Architecture course at Koç University. There is also an assembler and a tool to help create machine code and memory images compatible with logisim.
 
 ## Instructions
 
